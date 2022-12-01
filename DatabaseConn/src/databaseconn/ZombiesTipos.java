@@ -1,6 +1,5 @@
 package databaseconn;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,13 +15,11 @@ import java.sql.Statement;
  *
  * @author ppere
  */
-
-
-public class Donantesbbdd {
-
-    public static void main(String args[]) throws SQLException {
+public class ZombiesTipos {
+    
+    public void getTiposZombies(String nombreZombie) {
         String driver = "org.sqlite.JDBC";
-        String url = "jdbc:sqlite:torneoLima.db";
+        String url = "jdbc:sqlite:zombies.db";
 
 //        String usuario = "mtp";
 //        String clave = "mtpPass";
@@ -37,40 +34,46 @@ public class Donantesbbdd {
             conexion = DriverManager.getConnection(url);
             statement = conexion.createStatement();
 
-            //statement.executeUpdate("CREATE TABLE usuarios (nombre VARCHAR(25), login VARCHAR(15), edad INT, nivelParticipacion FLOAT);");
+            //statement.executeUpdate("CREATE TABLE usuarios (nombre VARCHAR(25), login VARCHAR(15), edad INT, nivelParticipacion FLOAT)");
 
-            resultados = statement.executeQuery("SELECT * FROM donantes;");
+           // statement.executeUpdate("INSERT INTO usuarios VALUES('Paloma','paloma',23, 0.64)");
+           //  statement.executeUpdate("INSERT INTO usuarios VALUES('Juan','juan',38, 0.23)");
+           // statement.executeUpdate("INSERT INTO usuarios VALUES('Tomñas','tomasito',28, 0.82)");
+            
+           //String nombreZombie = "zombieEspañol"; 
+            resultados = statement.executeQuery("SELECT * FROM zombie WHERE nombre == '" + nombreZombie + "';");
             
             while (resultados.next()) {
-                System.out.println(resultados.getString("nombre") + " " +
-                        resultados.getString("apellidos")+ " " + 
-                        resultados.getString("email") +  "  (Torneo: " + 
-                        resultados.getString("nomTorneo") + ")");
+                System.out.println("nombre: " + resultados.getString("nombre") + "\n" +
+                        "Tipo de Ataque: " + resultados.getString("tipoAtaque")+ "\n" + 
+                       "Nivel de Infección: "+ resultados.getString("nivelInfeccion") +  "\n" +
+                        "Rapidez: "+ resultados.getString("rapidez"));
                    }
-            } catch (Exception e) {
-            //e.printStackTrace();
-            }finally {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             try {
                 if (resultados != null) {
                     resultados.close();
                 }
             } catch (SQLException ex) {
-                //ex.printStackTrace();
+                ex.printStackTrace();
             }
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException ex) {
-                //ex.printStackTrace();
+                ex.printStackTrace();
             }
             try {
                 if (conexion != null) {
                     conexion.close();
                 }
             } catch (SQLException ex) {
-                //ex.printStackTrace();
+                ex.printStackTrace();
             }
         }
     }
+    
 }
