@@ -33,13 +33,13 @@ public class Donantesbbdd {
 
         try {
             Class.forName(driver);
-//            conexion = DriverManager.getConnection(url, usuario, clave);
+//          conexion = DriverManager.getConnection(url, usuario, clave);
             conexion = DriverManager.getConnection(url);
             statement = conexion.createStatement();
 
             //statement.executeUpdate("CREATE TABLE usuarios (nombre VARCHAR(25), login VARCHAR(15), edad INT, nivelParticipacion FLOAT);");
 
-            resultados = statement.executeQuery("SELECT * FROM voluntarios;");
+            resultados = statement.executeQuery("SELECT * FROM donantes;");
             
             while (resultados.next()) {
                 System.out.println(resultados.getString("nombre") + " " +
@@ -48,28 +48,28 @@ public class Donantesbbdd {
                         resultados.getString("nomTorneo") + ")");
                    }
             } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             }finally {
             try {
                 if (resultados != null) {
                     resultados.close();
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
             }
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
             }
             try {
                 if (conexion != null) {
                     conexion.close();
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
             }
         }
     }
